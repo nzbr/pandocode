@@ -27,7 +27,7 @@ def else_generator(code):
 
 def return_generator(code):
     code = code.replace("return ", "")
-    return "\\Return " + code, None
+    return "\\State\\Return " + code, None
 
 
 def state_generator(code):
