@@ -1,1 +1,1 @@
-countEmptyLines = False
+countEmptyLines = True
