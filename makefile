@@ -29,7 +29,7 @@ $(OUT).zip : $(OBJ)
 	@$(PYLINT) $<
 
 %.pyc : %.py %.py.lint
-	@printf "  PYC\t$<\n"
+	@printf "  PYC\t$@\n"
 	@$(PYC) $<
 
 ## Phony Targets
