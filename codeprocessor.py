@@ -1,13 +1,14 @@
-import configuration
+from configuration import *
 
 from generators import get_generator, get_keyword, generate_comment_line
 from preprocessor import preprocess
 from indent import generate_indentation, get_indentation_level
+from controlSequences import processControlSequences
 
 
 def process_line(line):
     if line == '':  # Don't process empty lines any further
-        if configuration.countEmptyLines:
+        if cCountEmptyLines:
             return "\\State", None, False, 0
         else:
             return "\\Statex", None, False, 0
@@ -45,12 +46,27 @@ def process_line(line):
 def process_code(pcode):
     if pcode[-1] == "\n":  # Remove trailing newline
         pcode = pcode[:-1]
+
+    pcode = pcode.split('\n')
+
+    pcode = processControlSequences(pcode)
+
     tex = ""
     terminators = []
     lastlvl = 0
-    for oline in pcode.split('\n'):
+    for oline in pcode:
         oline = oline.replace("\t", "    ") # Remove tabs
-        line, term, process_lvl, transform = process_line(oline)
+
+        line = ""
+        term = None
+        process_lvl = False
+        transform = 0
+
+        if oline.strip().startswith(cRawPrefix+" "):
+            line = oline.replace(cRawPrefix+" ", "").strip()
+        else:
+            line, term, process_lvl, transform = process_line(oline)
+
         if process_lvl:
             lvl = get_indentation_level(oline)
             while lvl < lastlvl:
