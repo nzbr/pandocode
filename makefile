@@ -4,7 +4,8 @@ ZIP=zip -0 -q
 PYLINT=pylint -E
 PYC=$(PY) -c "from py_compile import compile; from sys import argv; compile(argv[1], cfile=argv[1]+'c', doraise=True, optimize=2)"
 
-PREFIX=/usr/bin
+DESTDIR=/usr/bin
+PREFIX=$(DESTDIR)
 
 NAME=pandocode
 OUT=$(NAME).pyz
