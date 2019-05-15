@@ -79,7 +79,7 @@ Pandocode is tested to be working with [pandoc-include-code](https://github.com/
     ---
     header-includes:
       - \usepackage{algorithm}
-      - \usepackage{algpseudocode}
+      - \usepackage[noend]{algpseudocode}
     ---
 
     ```{.pseudo include=code.py}
