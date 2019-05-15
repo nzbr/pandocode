@@ -20,9 +20,9 @@ $(OUT) : $(OUT).zip
 	@echo "#!$$(which $(PY))" | cat - $(OUT).zip >$(OUT)
 	@chmod +x $(OUT)
 
-$(OUT).zip : $(OBJ)
+$(OUT).zip : $(OBJ) LICENSE
 	@printf "  ZIP\t$@  <=  $+\n"
-	@$(ZIP) $(OUT).zip $(OBJ) -x pyc.pyc
+	@$(ZIP) $(OUT).zip $(OBJ)
 
 %.py.lint : %.py
 	@printf "  LINT  $<\n"
