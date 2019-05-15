@@ -4,7 +4,7 @@ ZIP=zip -0 -q
 PYLINT=pylint -E
 PYC=$(PY) -c "from py_compile import compile; from sys import argv; compile(argv[1], cfile=argv[1]+'c', doraise=True, optimize=2)"
 
-DESTDIR=/usr/bin
+DESTDIR=/usr
 PREFIX=$(DESTDIR)
 
 NAME=pandocode
@@ -47,6 +47,6 @@ check : dist
 	@zip -T $(OUT).zip
 
 install : dist
-	@printf "  INST\t$(OUT) => $(PREFIX)/$(NAME)\n"
-	@install -m 755 $(OUT) $(PREFIX)/$(NAME)
+	@printf "  INST\t$(OUT) => $(PREFIX)/bin/$(NAME)\n"
+	@install -D -m 755 $(OUT) $(PREFIX)/bin/$(NAME)
 
