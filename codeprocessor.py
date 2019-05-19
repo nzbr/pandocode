@@ -7,7 +7,7 @@ from controlSequences import processControlSequences
 
 
 def process_line(line):
-    if line == '':  # Don't process empty lines any further
+    if line.strip() == '':  # Don't process empty lines any further
         if cCountEmptyLines:
             return "\\State", None, False, 0
         else:
