@@ -85,7 +85,6 @@ Pandocode is tested to be working with [pandoc-include-code](https://github.com/
 
     ---
     header-includes:
-      - \usepackage{algorithm}
       - \usepackage[noend]{algpseudocode}
     ---
 
