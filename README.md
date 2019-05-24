@@ -22,10 +22,17 @@ or
 `pandoc --filter pandocode <infile.md> -o <outfile>`
 
 ## Building
-- Install dependencies from `requirements.txt`
-- Install make dependencies from `make-requirements.txt`
+- Install dependencies from `requirements.txt` and `make-requirements.txt`
+    - `pip3 install -r requirements.txt -r make-requirements.txt`
+    - or `pip3 install --user -r requirements.txt -r make-requirements.txt`
 - Run `make`
 - _Optional:_ Run `sudo make install`
+    - This will install `pandocode.pyz` to `/usr/bin/pandocode`
+
+#### Use PyPy3 instead of CPython
+- Use `pypy3 -m pip` indead of `pip3`
+    - If pip is missing, install it with `pypy3 -m ensurepip` or `pypy3 -m ensurepip --user`
+- Run `make PY=pypy3` instead of `make`
 
 #### Without PyLint:
 If you want to build without running pylint:
