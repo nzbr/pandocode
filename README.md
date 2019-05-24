@@ -30,7 +30,7 @@ or
     - This will install `pandocode.pyz` to `/usr/bin/pandocode`
 
 #### Use PyPy3 instead of CPython
-- Use `pypy3 -m pip` indead of `pip3`
+- Use `pypy3 -m pip` instead of `pip3`
     - If pip is missing, install it with `pypy3 -m ensurepip` or `pypy3 -m ensurepip --user`
 - Run `make PY=pypy3` instead of `make`
 
