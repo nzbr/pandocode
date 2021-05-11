@@ -38,7 +38,7 @@ def process_line(line):
         generator = get_generator(keyword)
         line, terminator, process_lvl, transform = generator(line)
         if not comment == "":
-            line += " \\Comment{" + comment + "}"
+            line += " \\Comment{\ " + comment + "}"
 
     return line, terminator, process_lvl, transform  # Add generated line to result
 
