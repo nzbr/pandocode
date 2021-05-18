@@ -39,6 +39,10 @@ If you want to build without running pylint:
 - Don't install `make-requirements.txt`
 - Run `make PYLINT=$(which true)` instead of `make`
 
+## Examples
+
+[There is an example in the demo directory](https://github.com/nzbr/pandocode/tree/master/demo)
+
 ## Control sequences
 Pandocode allows the use of the following control sequences inside the code:
 
