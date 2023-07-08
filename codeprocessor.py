@@ -1,9 +1,9 @@
-from configuration import *
+from .configuration import *
 
-from generators import get_generator, get_keyword, generate_comment_line
-from preprocessor import preprocess
-from indent import generate_indentation, get_indentation_level
-from controlSequences import processControlSequences
+from .generators import get_generator, get_keyword, generate_comment_line
+from .preprocessor import preprocess
+from .indent import generate_indentation, get_indentation_level
+from .controlSequences import processControlSequences
 
 
 def process_line(line):

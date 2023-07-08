@@ -1,5 +1,5 @@
-from configuration import *
-from generators import get_keyword
+from .configuration import *
+from .generators import get_keyword
 
 def processControlSequences(fullcode):
     if fullcode[0].startswith("#!"): # Remove shebang
