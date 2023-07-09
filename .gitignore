@@ -184,3 +184,6 @@ tags
 .idea/modules.xml
 .idea/pandoc-pseudocode.iml
 .idea/vcs.xml
+
+result
+result/

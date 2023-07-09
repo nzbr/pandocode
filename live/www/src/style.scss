@@ -1,0 +1,45 @@
+@use "../node_modules/copperflame/css/config" with (
+  $professional: true,
+  $darkmode: false,
+  $debug: true,
+);
+
+@use "../node_modules/copperflame/css/elements";
+
+body {
+    margin: 0;
+
+    main {
+        $gap: 2rem;
+
+        display: flex;
+        gap: $gap;
+        padding: $gap;
+        width: calc(100vw - 2 * $gap);
+        height: calc(100vh - 2 * $gap);
+
+        @media (max-width: 100vh) {
+            flex-direction: column;
+        }
+
+        .split-content {
+            @include elements.floating-box;
+            width: calc((100vw - 3 * $gap) / 2);
+            height: calc(100vh - 3 * $gap);
+            margin: 0;
+            @media (max-width: 100vh) {
+                width: calc(100vw - 3 * $gap);
+                height: calc((100vh - 3 * $gap) / 2);
+            }
+        }
+
+        .monaco-editor {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+:root {
+    --vscode-editor-background: #000000 !important;
+}
