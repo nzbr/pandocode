@@ -1,0 +1,56 @@
+stages:
+  - build
+  - deploy
+
+docker:
+  stage: build
+  needs: []
+  tags:
+    - nix
+  interruptible: true
+  script:
+    - nix-env -iA nixpkgs.skopeo
+    - nix --extra-experimental-features "nix-command flakes" build -L .#pandocode-live
+    - skopeo login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - skopeo copy --insecure-policy docker-archive:result docker://${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG} --digestfile image-hash
+  artifacts:
+    paths:
+      - image-hash
+
+.before: &before
+  - apk --no-cache add jq curl
+  - curl -o /bin/kubectl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x /bin/kubectl
+  - cd live/terraform
+  - export KUBE_CONFIG_PATH=$KUBECONFIG
+  - export KUBE_NAMESPACE=pandocode-${CI_ENVIRONMENT_SLUG}
+  - kubectl get namespace $KUBE_NAMESPACE || kubectl create namespace $KUBE_NAMESPACE # Create namespace if it doesn't exist
+  - |
+    cat > vars.auto.tfvars << EOF
+    dockerconfigjson = "{ \"auths\": { \"$CI_REGISTRY\": { \"auth\": \"$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)\" } } }"
+    kubeconfig = "$KUBECONFIG"
+    namespace = "${KUBE_NAMESPACE}"
+    image = "${CI_REGISTRY_IMAGE}@$(cat ../../image-hash)"
+    host = "$(echo $CI_ENVIRONMENT_URL | sed -E 's|https?://||')"
+    EOF
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  environment:
+    name: production
+    url: https://pandocode.nzbr.de
+  retry:
+    max: 1
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  tags:
+    - kube-deploy
+  needs:
+    - docker
+  resource_group: $CI_ENVIRONMENT_SLUG
+  before_script: *before
+  script:
+    - gitlab-terraform init
+    - gitlab-terraform plan
+    - gitlab-terraform apply
