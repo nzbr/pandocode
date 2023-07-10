@@ -4,7 +4,7 @@ import sys
 import os
 from panflute import run_filter, CodeBlock, RawBlock
 
-from .codeprocessor import process_code
+from pandocode.codeprocessor import process_code
 
 
 def prepare(doc):

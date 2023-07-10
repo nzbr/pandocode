@@ -11,7 +11,7 @@ NAME=pandocode
 OUT=$(NAME).pyz
 
 ## Files
-SRC = $(wildcard *.py)
+SRC = $(wildcard *.py) $(wildcard pandocode/*.py)
 OBJ = $(SRC:%.py=%.pyc)
 CLEAN = $(wildcard *.pyc) $(wildcard *.pyz.zip) $(wildcard *.pyz) $(wildcard *.py.lint)
 
@@ -49,4 +49,3 @@ check : dist
 install : dist
 	@printf "  INST\t$(OUT) => $(PREFIX)/bin/$(NAME)\n"
 	@install -D -m 755 $(OUT) $(PREFIX)/bin/$(NAME)
-

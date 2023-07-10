@@ -51,10 +51,8 @@
                 inherit (pkgs.texlive) scheme-basic algorithmicx xcolor standalone preview;
             })
             (pkgs.writeShellScriptBin "python-wrapper" ''
-              export PYTHONPATH=${pkgs.runCommand "pandocode-module" {} ''
-                mkdir -p $out
-                cp -r ${./.}/. $out/pandocode
-              ''}
+              export PYTHONPATH=${./.}
+              export PATH=/bin:${pandocode}/bin
               exec ${pkgs.python3.withPackages (pypi: with pypi; [
                 panflute
                 pdf2image
