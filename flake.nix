@@ -45,22 +45,38 @@
 
           contents = [
             pkgs.lighttpd
+            pkgs.pandoc
+            pkgs.poppler_utils
+            (pkgs.texlive.combine {
+                inherit (pkgs.texlive) scheme-basic algorithmicx xcolor standalone preview;
+            })
             (pkgs.writeShellScriptBin "python-wrapper" ''
               export PYTHONPATH=${pkgs.runCommand "pandocode-module" {} ''
                 mkdir -p $out
                 cp -r ${./.}/. $out/pandocode
               ''}
-              exec ${python}/bin/python3 "$@"
+              exec ${pkgs.python3.withPackages (pypi: with pypi; [
+                panflute
+                pdf2image
+                pillow
+              ])}/bin/python3 "$@"
             '')
             (pkgs.runCommand "content" { } ''
-              mkdir -p $out/var/www/cgi-bin
+              mkdir -p $out/var/www
               cp -vr ${pandocode-live-frontend}/. $out/var/www/
               cp -vr ${./live/cgi-bin}/. $out/var/www/cgi-bin
+              cp -vr ${./live/etc}/. $out/etc
             '')
           ];
 
+          enableFakechroot = true;
+          fakeRootCommands = ''
+            mkdir -p /root /etc /tmp
+            echo 'root:x:0:0::/root:/noshell' > /etc/passwd
+          '';
+
           config = {
-            Cmd = [ "/bin/lighttpd" "-D" "-f" "${./live/lighttpd.conf}" ];
+            Cmd = [ "/bin/lighttpd" "-D" "-f" "/etc/lighttpd.conf" ];
             Env = [ "" ];
             ExposedPorts = {
               "8080/tcp" = { };
