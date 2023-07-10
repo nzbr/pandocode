@@ -59,6 +59,7 @@
                 panflute
                 pdf2image
                 pillow
+                numpy
               ])}/bin/python3 "$@"
             '')
             (pkgs.runCommand "content" { } ''
