@@ -48,7 +48,7 @@
             pkgs.pandoc
             pkgs.poppler_utils
             (pkgs.texlive.combine {
-                inherit (pkgs.texlive) scheme-basic algorithmicx xcolor standalone preview;
+                inherit (pkgs.texlive) scheme-basic algorithmicx xcolor standalone preview fancyvrb;
             })
             (pkgs.writeShellScriptBin "python-wrapper" ''
               export PYTHONPATH=${./.}

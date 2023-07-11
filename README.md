@@ -3,6 +3,8 @@
 `pandocode` is a pandoc filter that converts Python _(-like)_ code to LaTeX-Pseudocode.  
 It can also be used as a standalone program.
 
+## [Try it in your browser](https://pandocode.nzbr.de)
+
 ## Usage
 
 ### Standalone
